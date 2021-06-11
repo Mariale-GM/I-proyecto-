@@ -1,28 +1,178 @@
 ---
-title: "I proyecto"
+title: "Untitled"
 output: html_document
 ---
 
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
+## Carga de bibliotecas
+```{r}
+library(graphics)
+library(ggplot2)
+library(dplyr)
+library(gridExtra)
+
 ```
 
-## R Markdown
 
-This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
-
-When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
-
-```{r cars}
-summary(cars)
+```{r}
+Liberia_datos.climaticos <- read.csv("Liberia_datos climaticos.csv",
+                                     sep = ",",
+                                     na.strings = "0,00",
+                                     dec = ",")
 ```
 
-## Including Plots
 
-You can also embed plots, for example:
+# Limpieza de datos
 
-```{r pressure, echo=FALSE}
-plot(pressure)
+```{r}
+Liberia_datos.climaticos <- na.omit(Liberia_datos.climaticos)
 ```
 
-Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot. 
+```{r}
+head(Liberia_datos.climaticos)
+```
+ 
+```{r}
+dim(Liberia_datos.climaticos)
+```
+
+ 
+```{r}
+ ggplot(data = Liberia_datos.climaticos, aes(x = Temperatura..Celsius.)) + geom_histogram(binwidth = 2,
+ color = "red",
+ fill = "white") +
+  facet_grid()
+```
+
+```{r}
+ggplot(data = Liberia_datos.climaticos, aes(x = HumedadRelativa....,)) + geom_histogram(binwidth = 2, 
+color = "green",                
+fill= "white") +
+  facet_grid()
+
+```
+
+```{r}
+Temp <- ggplot(data = Liberia_datos.climaticos, aes(x = Temperatura..Celsius.)) + geom_histogram(binwidth = 2,
+ color = "red",
+ fill = "white") +
+  facet_grid()
+```
+
+```{r}
+HumR <- ggplot(data = Liberia_datos.climaticos, aes(x = HumedadRelativa....,)) + geom_histogram(binwidth = 2, 
+color = "green",                
+fill= "white") +
+  facet_grid()
+
+```
+
+```{r}
+ggplot(data = Liberia_datos.climaticos, aes(x = VelocidadViento..m.s.))+ geom_histogram(binwidth = 2,
+ color = "purple",
+ fill = "white") +
+  facet_grid()
+```
+
+```{r}
+VelV <- ggplot(data = Liberia_datos.climaticos, aes(x = VelocidadViento..m.s.))+ geom_histogram(binwidth = 2,
+ color = "purple",
+ fill = "white") +
+  facet_grid()
+```
+
+```{r}
+ggplot(data = Liberia_datos.climaticos, aes(x = Lluvia..mm.))+ geom_histogram(binwidth = 2,
+ color = "blue",
+ fill = "white") +
+  facet_grid()
+```
+
+```{r}
+LLuv <- ggplot(data = Liberia_datos.climaticos, aes(x = Lluvia..mm.))+ geom_histogram(binwidth = 2,
+ color = "blue",
+ fill = "white") +
+  facet_grid()
+```
+
+```{r}
+ggplot(data = Liberia_datos.climaticos, aes(x = Irradiacion..W.m2.))+ geom_histogram(binwidth = 2,
+ color = "orange",
+ fill = "white") +
+  facet_grid()
+```
+
+```{r}
+Irr <- ggplot(data = Liberia_datos.climaticos, aes(x = Irradiacion..W.m2.))+ geom_histogram(binwidth = 2,
+ color = "orange",
+ fill = "white") +
+  facet_grid()
+```
+
+```{r}
+ ggplot(data = Liberia_datos.climaticos, aes(x = EvapoTranspiracion..mm.))+ geom_histogram(binwidth = 2,
+ color = "pink",
+ fill = "grey") +
+  facet_grid()
+```
+
+```{r}
+ EvaT <- ggplot(data = Liberia_datos.climaticos, aes(x = EvapoTranspiracion..mm.))+ geom_histogram(binwidth = 2,
+ color = "pink",
+ fill = "grey") +
+  facet_grid()
+```
+
+
+## 6 variables en un panel.
+
+```{r}
+grid.arrange(Temp,HumR, VelV, LLuv, Irr,EvaT, nrow = 2) 
+```
+
+
+```{r}
+Promedio_datos <- Liberia_datos.climaticos %>%
+  select(Date, HumedadRelativa...., VelocidadViento..m.s., Lluvia..mm., Irradiacion..W.m2., EvapoTranspiracion..mm., Temperatura..Celsius.) %>%
+  mutate(Date = as.Date(Date, format = "%d/%m/%y")) %>%
+  group_by(Date = format(Date, "%m")) %>% 
+  summarise(HumedadRelativa.... = mean(HumedadRelativa....), VelocidadViento..m.s. = mean(VelocidadViento..m.s.), Lluvia..mm. = sum(Lluvia..mm.), Irradiacion..W.m2. = mean(Irradiacion..W.m2.), EvapoTranspiracion..mm. = sum(EvapoTranspiracion..mm.), Temperatura..Celsius. = mean(Temperatura..Celsius.))
+```
+
+
+```{r}
+
+I.grafico <- ggplot(Promedio_datos, aes(x=Date, y=Temperatura..Celsius., group = 1 )) + geom_line()
+
+```
+
+```{r}
+graficoII <- ggplot(Promedio_datos, aes(x=Date, y=HumedadRelativa...., group = 1 )) + geom_line()
+
+```
+
+```{r}
+tercero <- ggplot(Promedio_datos, aes(x=Date, y=VelocidadViento..m.s., group = 1 )) + geom_line()
+
+```
+
+```{r}
+cuarto <- ggplot(Promedio_datos, aes(x=Date, y=Lluvia..mm., group = 1 )) + geom_line()
+
+```
+
+```{r}
+quinto <- ggplot(Promedio_datos, aes(x=Date, y=Irradiacion..W.m2., group = 1 )) + geom_line()
+
+```
+
+```{r}
+sexto <- ggplot(Promedio_datos, aes(x=Date, y=EvapoTranspiracion..mm., group = 1 )) + geom_line()
+
+```
+
+
+## Segunda parte, grafios de lineas. 
+```{r}
+grid.arrange(I.grafico, graficoII, tercero, cuarto, quinto, sexto, nrow = 2)
+```
+
