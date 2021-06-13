@@ -174,7 +174,8 @@ b <- ggplot(Promedio_datos, aes(x=Date, y=Irradiacion..W.m2., group = 1 )) + geo
 ```
 
 ```{r}
-a <- ggplot(Promedio_datos, aes(x=Date, y=EvapoTranspiracion..mm., group = 1 )) + geom_point()
+a <- ggplot(Promedio_datos, aes(x=Date, y=EvapoTranspiracion..mm., group = 1))
+                              + geom_point()
 ```
 
 ```{r}
