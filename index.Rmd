@@ -36,20 +36,9 @@ dim(Liberia_datos.climaticos)
 ```
 
  
-```{r}
- ggplot(data = Liberia_datos.climaticos, aes(x = Temperatura..Celsius.)) + geom_histogram(binwidth = 2,
- color = "red",
- fill = "white") +
-  facet_grid()
-```
 
-```{r}
-ggplot(data = Liberia_datos.climaticos, aes(x = HumedadRelativa....,)) + geom_histogram(binwidth = 2, 
-color = "green",                
-fill= "white") +
-  facet_grid()
 
-```
+
 
 ```{r}
 Temp <- ggplot(data = Liberia_datos.climaticos, aes(x = Temperatura..Celsius.)) + geom_histogram(binwidth = 2,
@@ -66,12 +55,6 @@ fill= "white") +
 
 ```
 
-```{r}
-ggplot(data = Liberia_datos.climaticos, aes(x = VelocidadViento..m.s.))+ geom_histogram(binwidth = 2,
- color = "purple",
- fill = "white") +
-  facet_grid()
-```
 
 ```{r}
 VelV <- ggplot(data = Liberia_datos.climaticos, aes(x = VelocidadViento..m.s.))+ geom_histogram(binwidth = 2,
@@ -80,12 +63,7 @@ VelV <- ggplot(data = Liberia_datos.climaticos, aes(x = VelocidadViento..m.s.))+
   facet_grid()
 ```
 
-```{r}
-ggplot(data = Liberia_datos.climaticos, aes(x = Lluvia..mm.))+ geom_histogram(binwidth = 2,
- color = "blue",
- fill = "white") +
-  facet_grid()
-```
+
 
 ```{r}
 LLuv <- ggplot(data = Liberia_datos.climaticos, aes(x = Lluvia..mm.))+ geom_histogram(binwidth = 2,
@@ -94,12 +72,7 @@ LLuv <- ggplot(data = Liberia_datos.climaticos, aes(x = Lluvia..mm.))+ geom_hist
   facet_grid()
 ```
 
-```{r}
-ggplot(data = Liberia_datos.climaticos, aes(x = Irradiacion..W.m2.))+ geom_histogram(binwidth = 2,
- color = "orange",
- fill = "white") +
-  facet_grid()
-```
+
 
 ```{r}
 Irr <- ggplot(data = Liberia_datos.climaticos, aes(x = Irradiacion..W.m2.))+ geom_histogram(binwidth = 2,
@@ -108,12 +81,7 @@ Irr <- ggplot(data = Liberia_datos.climaticos, aes(x = Irradiacion..W.m2.))+ geo
   facet_grid()
 ```
 
-```{r}
- ggplot(data = Liberia_datos.climaticos, aes(x = EvapoTranspiracion..mm.))+ geom_histogram(binwidth = 2,
- color = "pink",
- fill = "grey") +
-  facet_grid()
-```
+
 
 ```{r}
  EvaT <- ggplot(data = Liberia_datos.climaticos, aes(x = EvapoTranspiracion..mm.))+ geom_histogram(binwidth = 2,
@@ -175,4 +143,42 @@ sexto <- ggplot(Promedio_datos, aes(x=Date, y=EvapoTranspiracion..mm., group = 1
 ```{r}
 grid.arrange(I.grafico, graficoII, tercero, cuarto, quinto, sexto, nrow = 2)
 ```
+
+
+## Tercera parte
+
+ 
+```{r}
+f <- ggplot(Promedio_datos, aes(x=Date, y=Temperatura..Celsius., group = 1 )) + geom_point()
+
+```
+
+```{r}
+e <- ggplot(Promedio_datos, aes(x=Date, y=HumedadRelativa...., group = 1 )) + geom_point()
+
+```
+
+```{r}
+d <- ggplot(Promedio_datos, aes(x=Date, y=VelocidadViento..m.s., group = 1 )) + geom_point()
+
+```
+
+```{r}
+c <- ggplot(Promedio_datos, aes(x=Date, y=Lluvia..mm., group = 1 )) + geom_point()
+
+```
+
+```{r}
+b <- ggplot(Promedio_datos, aes(x=Date, y=Irradiacion..W.m2., group = 1 )) + geom_point()
+
+```
+
+```{r}
+a <- ggplot(Promedio_datos, aes(x=Date, y=EvapoTranspiracion..mm., group = 1 )) + geom_point()
+```
+
+```{r}
+grid.arrange(f, e, d, c, a, b, nrow = 2)
+```
+
 
